@@ -2,7 +2,7 @@ import base64
 import logging
 import pickle
 
-from datetime import datetime
+from django.utils import timezone
 
 from django.core.mail import EmailMessage
 from django.db import models
@@ -85,7 +85,7 @@ class Message(models.Model):
     
     # The actual data - a pickled EmailMessage
     message_data = models.TextField()
-    when_added = models.DateTimeField(default=datetime.now)
+    when_added = models.DateTimeField(default=timezone.now)
     priority = models.CharField(max_length=1, choices=PRIORITIES, default="2")
     # @@@ campaign?
     # @@@ content_type?
@@ -229,7 +229,7 @@ class MessageLog(models.Model):
     # @@@ campaign?
     
     # additional logging fields
-    when_attempted = models.DateTimeField(default=datetime.now)
+    when_attempted = models.DateTimeField(default=timezone.now)
     result = models.CharField(max_length=1, choices=RESULT_CODES)
     log_message = models.TextField()
     
